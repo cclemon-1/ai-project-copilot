@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { isProjectPinVerified } from "@/lib/projectAccess";
+import { isProjectAccessVerified } from "@/lib/projectAccess";
 
 export default function PinVerifiedGuard({ children }) {
   const router = useRouter();
@@ -10,7 +10,7 @@ export default function PinVerifiedGuard({ children }) {
   const [allowed, setAllowed] = useState(false);
 
   useEffect(() => {
-    if (!isProjectPinVerified(projectId)) {
+    if (!isProjectAccessVerified(projectId)) {
       router.replace(`/project/${projectId}/access`);
       return;
     }

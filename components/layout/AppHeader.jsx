@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Brand from "@/components/ui/Brand";
 import ThemeButton from "@/components/ui/ThemeButton";
-import { canManageProjectPin, clearProjectAccess, getSelectedMember } from "@/lib/projectAccess";
+import { canEditProject, clearProjectAccess, getSelectedMember } from "@/lib/projectAccess";
 
 export default function AppHeader({ projectName }) {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -12,7 +12,7 @@ export default function AppHeader({ projectName }) {
   useEffect(() => {
     setMember(projectName ? getSelectedMember() : null);
   }, [projectName]);
-  const canManagePin = canManageProjectPin(member);
+  const canEdit = canEditProject(member);
 
   function exitProject() {
     clearProjectAccess();
@@ -32,7 +32,7 @@ export default function AppHeader({ projectName }) {
       <button aria-label="Notifications" className="relative grid size-9 place-items-center rounded-lg border border-slate-200 dark:border-white/10">♢<i className="absolute right-2 top-2 size-1.5 rounded-full bg-red-500" /></button>
       <div className="relative">
         <button onClick={() => setProfileOpen(!profileOpen)} className="grid size-9 place-items-center rounded-full bg-blue-600 text-xs font-bold text-white">{member?.initials || "○"}</button>
-        {profileOpen && <div className="absolute right-0 top-11 w-52 rounded-xl border border-slate-200 bg-white p-2 shadow-xl dark:border-white/10 dark:bg-zinc-900"><div className="border-b border-slate-100 p-2 dark:border-white/10"><b className="block text-sm">{member?.name || "Workspace"}</b><span className="text-xs text-slate-500">{projectName ? member?.role || "Project member" : "No active project"}</span></div>{projectName&&canManagePin&&<Link href="/project/csit205-genai-assignment-2/settings" className="block rounded-lg p-2 text-xs hover:bg-slate-50 dark:hover:bg-white/5">Project Settings</Link>}<button className="w-full rounded-lg p-2 text-left text-xs hover:bg-slate-50 dark:hover:bg-white/5">Help & About</button>{projectName&&<button onClick={exitProject} className="w-full border-t border-slate-100 p-2 text-left text-xs text-red-600 dark:border-white/10">Exit Project</button>}</div>}
+        {profileOpen && <div className="absolute right-0 top-11 w-52 rounded-xl border border-slate-200 bg-white p-2 shadow-xl dark:border-white/10 dark:bg-zinc-900"><div className="border-b border-slate-100 p-2 dark:border-white/10"><b className="block text-sm">{member?.name || "Workspace"}</b><span className="text-xs text-slate-500">{projectName ? member?.role || "Project member" : "No active project"}</span></div>{projectName&&canEdit&&<Link href="/project/csit205-genai-assignment-2/settings" className="block rounded-lg p-2 text-xs hover:bg-slate-50 dark:hover:bg-white/5">Project Settings</Link>}<button className="w-full rounded-lg p-2 text-left text-xs hover:bg-slate-50 dark:hover:bg-white/5">Help & About</button>{projectName&&<button onClick={exitProject} className="w-full border-t border-slate-100 p-2 text-left text-xs text-red-600 dark:border-white/10">Exit Project</button>}</div>}
       </div>
     </header>
   );

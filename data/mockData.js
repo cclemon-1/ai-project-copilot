@@ -5,7 +5,7 @@ export const project = {
   course: "CSIT205 Generative AI",
   university: "University of Wollongong",
   status: "On Track",
-  pin: "205205",
+  accessCode: "A7kP2Qx",
   summary:
     "Develop and evaluate a responsible generative AI solution aligned with the UN Sustainable Development Goals. The team is refining research questions, validating its proposed solution, and preparing evidence for the final recommendation.",
 };
