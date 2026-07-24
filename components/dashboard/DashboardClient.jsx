@@ -55,7 +55,7 @@ export default function DashboardClient() {
   function addTask(event) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    setTasks([...tasks, { title: form.get("title"), description: form.get("description"), assignee: "CCR", initials: "CC", priority: form.get("priority"), status: "Not Started", due: "31 Jul", progress: 0 }]);
+    setTasks([...tasks, { title: form.get("title"), description: form.get("description"), assignee: member?.name || "Unassigned", initials: member?.initials || "—", priority: form.get("priority"), status: "Not Started", due: "31 Jul", progress: 0 }]);
     setTaskOpen(false);
     notify("Task created.");
   }

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import ProjectShell from "@/components/layout/ProjectShell";
-import { canManageProjectPin, getProjectPin, getSelectedMember, PIN_KEY } from "@/lib/projectAccess";
+import { canManageProjectPin, getProjectPin, getProjectPinKey, getSelectedMember } from "@/lib/projectAccess";
+import { project } from "@/data/mockData";
 
 const publicSections = ["General", "Appearance", "Knowledge Base", "AI Settings", "Notifications", "Future Integrations"];
 
@@ -20,7 +21,7 @@ export default function SettingsPage() {
   useEffect(() => {
     const selected = getSelectedMember();
     setMember(selected);
-    setCurrentPin(getProjectPin());
+    setCurrentPin(getProjectPin(project.id));
   }, []);
 
   const canManagePin = canManageProjectPin(member);
@@ -28,7 +29,7 @@ export default function SettingsPage() {
 
   function regeneratePin() {
     const generated = String(Math.floor(100000 + Math.random() * 900000));
-    localStorage.setItem(PIN_KEY, generated);
+    localStorage.setItem(getProjectPinKey(project.id), generated);
     setCurrentPin(generated);
     setNewPin("");
     setConfirmPin("");
@@ -50,7 +51,7 @@ export default function SettingsPage() {
   }
 
   function savePin() {
-    localStorage.setItem(PIN_KEY, newPin);
+    localStorage.setItem(getProjectPinKey(project.id), newPin);
     setCurrentPin(newPin);
     setNewPin("");
     setConfirmPin("");

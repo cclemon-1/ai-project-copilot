@@ -21,7 +21,7 @@ export default function ProjectAccessPage() {
 
   function verifyPin(event) {
     event.preventDefault();
-    if (pin !== getProjectPin()) {
+    if (pin !== getProjectPin(project.id)) {
       setError("That PIN does not match. Check the shared project PIN and try again.");
       return;
     }

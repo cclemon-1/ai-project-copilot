@@ -10,14 +10,35 @@ export const project = {
     "Develop and evaluate a responsible generative AI solution aligned with the UN Sustainable Development Goals. The team is refining research questions, validating its proposed solution, and preparing evidence for the final recommendation.",
 };
 
-export const members = [
-  ["CC", "CCR", "Leader", "bg-blue-600"],
-  ["DT", "Darren Tin", "Vice Leader", "bg-violet-600"],
-  ["DL", "Darren Liem", "Member", "bg-amber-600"],
-  ["CY", "Cynthia", "Member", "bg-pink-600"],
-  ["CH", "Checo", "Member", "bg-emerald-600"],
-  ["SU", "Su", "Member", "bg-cyan-600"],
+const projectMembers = [
+  { id: "ccr", initials: "CC", name: "CCR", role: "Leader", color: "bg-blue-600" },
+  { id: "darren-tin", initials: "DT", name: "Darren Tin", role: "Vice Leader", color: "bg-violet-600" },
+  { id: "darren-liem", initials: "DL", name: "Darren Liem", role: "Member", color: "bg-amber-600" },
+  { id: "cynthia", initials: "CY", name: "Cynthia", role: "Member", color: "bg-pink-600" },
+  { id: "checo", initials: "CH", name: "Checo", role: "Member", color: "bg-emerald-600" },
+  { id: "su", initials: "SU", name: "Su", role: "Member", color: "bg-cyan-600" },
 ];
+
+project.members = projectMembers;
+
+export const projects = [project];
+
+export function getProjectById(projectId) {
+  return projects.find((item) => item.id === projectId) || null;
+}
+
+export function hasProjectLeader(members = []) {
+  return members.some((member) => member.role === "Leader");
+}
+
+export function createProjectRecord(projectInput) {
+  const members = Array.isArray(projectInput.members) ? projectInput.members : [];
+  if (!hasProjectLeader(members)) {
+    throw new Error("A project must have at least one Leader.");
+  }
+
+  return { ...projectInput, members: members.map((member) => ({ ...member })) };
+}
 
 export const tasks = [
   { title: "Research SDG Alignment", description: "Map the proposed solution to relevant UN goals.", assignee: "Cynthia", initials: "CY", priority: "High", status: "In Progress", due: "24 Jul", progress: 65 },
